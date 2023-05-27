@@ -1,20 +1,5 @@
 #!/bin/bash
 
-# Update the system
-sudo apt-get update
-
-# Install necessary dependencies
-sudo apt-get install -y build-essential openssl libssl-dev pkg-config
-
-# NodeJS Install
-sudo apt-get install -y build-essential openssl libssl-dev pkg-config
-sudo apt-get install -y nodejs nodejs-legacy 
-sudo apt-get install npm -y
-sudo npm cache clean -f
-sudo npm install -g n
-sudo n stable
-sudo apt-get install nginx git -y
-
 # Clone the repository
 cd /var/www
 sudo git clone https://github.com/viveksinra/cashNowBackend.git
