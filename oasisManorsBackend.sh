@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Clone the repository
+cd /var/www
+sudo git clone https://github.com/viveksinra/oasisManorsBackend.git
+# SetUp Nginx:
+
+# Move to the project directory
+cd oasisManorsBackend
+sudo apt-get install -y build-essential openssl libssl-dev pkg-config
+cd /etc/nginx/sites-available
+# adding Vim
+sudo bash -c "cat > /etc/nginx/sites-available/oasisManorsBackend" <<EOL
+server {
+    listen 80;
+    location / {
+        proxy_pass http://172.31.7.137:2040;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+EOL
+sudo rm default
+# Create a symbolic link from sites-enabled to sites-available:
+sudo ln -s /etc/nginx/sites-available/oasisManorsBackend /etc/nginx/sites-enabled/oasisManorsBackend
+
+# Remove the default from nginx’s sites-enabled diretory:
+sudo rm /etc/nginx/sites-enabled/default
+Installing pm2 and updating project dependencies:
+sudo npm install pm2 -g
+cd /var/www/
+sudo chown -R ubuntu oasisManorsBackend
+cd oasisManorsBackend
+sudo npm install
+
+
+# Install project dependencies
+sudo npm install
+pm2 start server.js
+sudo service nginx stop && sudo service nginx start
+pm2 restart server.js
