@@ -3,7 +3,7 @@
 sudo apt-get update
 sudo apt-get install -y build-essential openssl libssl-dev pkg-config
 
-#Node.js Setup:
+#Node.js Install:
 
 sudo apt-get install -y build-essential openssl libssl-dev pkg-config
 sudo apt-get install -y nodejs nodejs-legacy 
